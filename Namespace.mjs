@@ -101,7 +101,7 @@ class Namespace {
                 import(register.path).then((module) => {
                   this[moduleName] = module.default;
                   if(this.default.useGlobal)
-                    global[moduleName] = this[moduleName];
+                    globalThis[moduleName] = this[moduleName];
                   this.#succeeded.add(moduleName);
                   register.done = true;
                   resolve(moduleName);
@@ -114,7 +114,7 @@ class Namespace {
             import(register.path).then((module) => {
               this[moduleName] = module.default;
               if(this.default.useGlobal)
-                global[moduleName] = this[moduleName];
+                globalThis[moduleName] = this[moduleName];
               this.#succeeded.add(moduleName);
               register.done = true;
               resolve(moduleName);
