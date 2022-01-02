@@ -144,7 +144,7 @@ class Namespace {
     **/
   static register(searchPath = this.default.searchPath, basePath = Namespace.path) {
     return new Promise((resolve, reject) => {
-      this.registerPath(this.resolvePath(searchPath, basePath))
+      this.registerPath(this.resolvePath(searchPath, basePath).replace('file://', ''))
         .then((namespace) => {
           console.log('Registry:', Object.keys(this.#registry));
           resolve(this.#registry);
@@ -198,9 +198,8 @@ class Namespace {
     * @param {string} basePath - optional alternative base path
     * @return {string}
     **/
-  static resolvePath(path = './', basePath = this.basePath) {
-    path = path.startsWith('./') ? basePath + path.substr(1) : path.startsWith('~/') ? os.homeDir() + path.substr(1) : path;
-    return path.replace('file://', '');
+  static resolvePath(path = './', basePath = this.path) {
+    return path.startsWith('./') ? basePath + path.substr(1) : path.startsWith('~/') ? os.homeDir() + path.substr(1) : path;
   }
 }
 
